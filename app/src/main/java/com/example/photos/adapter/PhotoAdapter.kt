@@ -19,11 +19,11 @@ class PhotoAdapter(
     private data class PhotoHolder(val titleTextView: TextView)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        return convertView ?: LayoutInflater.from(activityContext)
+        val view = convertView ?: LayoutInflater.from(activityContext)
             .inflate(android.R.layout.simple_list_item_1, parent, false).apply {
                 tag = PhotoHolder(findViewById(android.R.id.text1))
-            }.apply {
-                (this.tag as PhotoHolder).titleTextView.text = photos[position].title
             }
+        (view.tag as PhotoHolder).titleTextView.text = photos[position].title
+        return view
     }
 }
