@@ -2,4 +2,6 @@
     <string name="app_name">Photos</string>
     <string name="thumbnail">Thumbnail</string>
     <string name="photo">Photo</string>
+    <string name="request_error">Request error</string>
+    <string name="photos">Photos</string>
 </resources>
