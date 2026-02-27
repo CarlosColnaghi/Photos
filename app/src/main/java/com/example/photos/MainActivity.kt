@@ -57,11 +57,7 @@ class MainActivity : AppCompatActivity() {
                 photoAdapter.addAll(it)
             },
             {
-                Toast.makeText(
-                    this,
-                    getString(R.string.request_error),
-                    Toast.LENGTH_SHORT)
-                .show()
+                Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
             }
         ).also{
             PhotoService.getInstance(this).addRequestToQueue(it)
@@ -70,12 +66,22 @@ class MainActivity : AppCompatActivity() {
     private fun getPhotoPreview(photo: Photo) =
         PhotoService.getInstance(this).photoPreview(
             photo,
-            {bitmap -> activityMainBinding.photoImageView.setImageBitmap(bitmap)},
-            {error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()})
+            {
+                bitmap -> activityMainBinding.photoImageView.setImageBitmap(bitmap)
+            },
+            {
+                error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
+            }
+        )
 
     private fun getThumbnailPreview(photo: Photo) =
         PhotoService.getInstance(this).thumbnailPreview(
             photo,
-            {bitmap -> activityMainBinding.thumbnailImageView.setImageBitmap(bitmap)},
-            {error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()})
+            {
+                bitmap -> activityMainBinding.thumbnailImageView.setImageBitmap(bitmap)
+            },
+            {
+                error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
+            }
+        )
 }

@@ -69,9 +69,13 @@ class PhotoService(context: Context) {
     ){
         ImageRequest(
             photo?.url?.fixUrl(),
-            {response -> onSuccess(response)},
+            {
+                response -> onSuccess(response)
+            },
             0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888,
-            {error -> onError(error)}
+            {
+                error -> onError(error)
+            }
         ).also {
             addRequestToQueue(it)
         }
@@ -84,9 +88,13 @@ class PhotoService(context: Context) {
     ){
         ImageRequest(
             photo?.thumbnailUrl?.fixUrl(),
-            {response -> onSuccess(response)},
+            {
+                response -> onSuccess(response)
+            },
             0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888,
-            {error -> onError(error)}
+            {
+                error -> onError(error)
+            }
         ).also {
             addRequestToQueue(it)
         }
