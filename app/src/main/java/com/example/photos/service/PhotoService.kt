@@ -1,12 +1,15 @@
 package com.example.photos.service
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.widget.ImageView
 import com.android.volley.NetworkResponse
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.HttpHeaderParser
+import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
 import com.example.photos.model.Photo
 import com.google.gson.Gson
@@ -55,5 +58,37 @@ class PhotoService(context: Context) {
             responseListener.onResponse(response)
         }
 
+    }
+
+    private fun String.fixUrl() = "${this.replace("via.placeholder.com", "placehold.co")}/image.png"
+
+    fun photoPreview(
+        photo: Photo?,
+        onSuccess: (Bitmap) -> Unit,
+        onError: (VolleyError) -> Unit
+    ){
+        ImageRequest(
+            photo?.url?.fixUrl(),
+            {response -> onSuccess(response)},
+            0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888,
+            {error -> onError(error)}
+        ).also {
+            addRequestToQueue(it)
+        }
+    }
+
+    fun thumbnailPreview(
+        photo: Photo?,
+        onSuccess: (Bitmap) -> Unit,
+        onError: (VolleyError) -> Unit
+    ){
+        ImageRequest(
+            photo?.thumbnailUrl?.fixUrl(),
+            {response -> onSuccess(response)},
+            0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888,
+            {error -> onError(error)}
+        ).also {
+            addRequestToQueue(it)
+        }
     }
 }

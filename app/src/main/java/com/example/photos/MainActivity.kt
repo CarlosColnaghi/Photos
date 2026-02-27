@@ -1,6 +1,8 @@
 package com.example.photos
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -32,8 +34,20 @@ class MainActivity : AppCompatActivity() {
 
         activityMainBinding.titleSpinner.apply {
             adapter = photoAdapter
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    getPhotoPreview(photos[position])
+                    getThumbnailPreview(photos[position])
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
         }
-
         getPhotos()
     }
 
@@ -52,4 +66,16 @@ class MainActivity : AppCompatActivity() {
         ).also{
             PhotoService.getInstance(this).addRequestToQueue(it)
         }
+
+    private fun getPhotoPreview(photo: Photo) =
+        PhotoService.getInstance(this).photoPreview(
+            photo,
+            {bitmap -> activityMainBinding.photoImageView.setImageBitmap(bitmap)},
+            {error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()})
+
+    private fun getThumbnailPreview(photo: Photo) =
+        PhotoService.getInstance(this).thumbnailPreview(
+            photo,
+            {bitmap -> activityMainBinding.thumbnailImageView.setImageBitmap(bitmap)},
+            {error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()})
 }
