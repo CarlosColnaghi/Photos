@@ -37,7 +37,7 @@ class PhotoService(context: Context) {
         requestQueue.add(request)
     }
 
-    class PhotosRequest(
+    class GetPhotos(
         private val responseListener: Response.Listener<MutableList<Photo>>,
         errorListener: Response.ErrorListener
     ): Request<MutableList<Photo>>(Method.GET, ENDPOINT, errorListener){
@@ -62,38 +62,38 @@ class PhotoService(context: Context) {
 
     private fun String.fixUrl() = "${this.replace("via.placeholder.com", "placehold.co")}/image.png"
 
-    fun photoPreview(
-        photo: Photo?,
+    fun getPhotoPreview(
+        photo: Photo,
         onSuccess: (Bitmap) -> Unit,
         onError: (VolleyError) -> Unit
     ){
         ImageRequest(
-            photo?.url?.fixUrl(),
+            photo.url.fixUrl(),
             {
-                response -> onSuccess(response)
+                onSuccess(it)
             },
             0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888,
             {
-                error -> onError(error)
+                onError(it)
             }
         ).also {
             addRequestToQueue(it)
         }
     }
 
-    fun thumbnailPreview(
-        photo: Photo?,
+    fun getThumbnailPreview(
+        photo: Photo,
         onSuccess: (Bitmap) -> Unit,
         onError: (VolleyError) -> Unit
     ){
         ImageRequest(
-            photo?.thumbnailUrl?.fixUrl(),
+            photo.thumbnailUrl.fixUrl(),
             {
-                response -> onSuccess(response)
+                onSuccess(it)
             },
             0, 0, ImageView.ScaleType.CENTER, Bitmap.Config.ARGB_8888,
             {
-                error -> onError(error)
+                onError(it)
             }
         ).also {
             addRequestToQueue(it)

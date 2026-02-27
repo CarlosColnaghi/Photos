@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.photos.adapter.PhotoAdapter
 import com.example.photos.databinding.ActivityMainBinding
 import com.example.photos.model.Photo
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getPhotos() =
-        PhotoService.PhotosRequest(
+        PhotoService.GetPhotos(
             {
                 photoAdapter.addAll(it)
             },
@@ -64,24 +61,24 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun getPhotoPreview(photo: Photo) =
-        PhotoService.getInstance(this).photoPreview(
+        PhotoService.getInstance(this).getPhotoPreview(
             photo,
             {
-                bitmap -> activityMainBinding.photoImageView.setImageBitmap(bitmap)
+                activityMainBinding.photoImageView.setImageBitmap(it)
             },
             {
-                error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
             }
         )
 
     private fun getThumbnailPreview(photo: Photo) =
-        PhotoService.getInstance(this).thumbnailPreview(
+        PhotoService.getInstance(this).getThumbnailPreview(
             photo,
             {
-                bitmap -> activityMainBinding.thumbnailImageView.setImageBitmap(bitmap)
+                activityMainBinding.thumbnailImageView.setImageBitmap(it)
             },
             {
-                error -> Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.request_error), Toast.LENGTH_SHORT).show()
             }
         )
 }
