@@ -38,18 +38,18 @@ class MainActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    getPhotoPreview(photos[position])
-                    getThumbnailPreview(photos[position])
+                    fetchPhotoPreview(photos[position])
+                    fetchThumbnailPreview(photos[position])
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
         }
-        getPhotos()
+        fetchPhotos()
     }
 
-    private fun getPhotos() =
-        PhotoService.GetPhotos(
+    private fun fetchPhotos() =
+        PhotoService.FetchPhotos(
             {
                 photoAdapter.addAll(it)
             },
@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity() {
             PhotoService.getInstance(this).addRequestToQueue(it)
         }
 
-    private fun getPhotoPreview(photo: Photo) =
-        PhotoService.getInstance(this).getPhotoPreview(
+    private fun fetchPhotoPreview(photo: Photo) =
+        PhotoService.getInstance(this).fetchPhotoPreview(
             photo,
             {
                 activityMainBinding.photoImageView.setImageBitmap(it)
@@ -71,8 +71,8 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-    private fun getThumbnailPreview(photo: Photo) =
-        PhotoService.getInstance(this).getThumbnailPreview(
+    private fun fetchThumbnailPreview(photo: Photo) =
+        PhotoService.getInstance(this).fetchThumbnailPreview(
             photo,
             {
                 activityMainBinding.thumbnailImageView.setImageBitmap(it)
