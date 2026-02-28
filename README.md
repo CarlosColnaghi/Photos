@@ -8,6 +8,6 @@ O aplicativo utiliza o Web Service JSONPlaceholder ([https://jsonplaceholder.typ
 
 ## Screenshots
 
-![screenshot 01](Screenshot_20260227_205815.png) 
-![screenshot 02](Screenshot_20260227_205857.png) 
-![screenshot 03](Screenshot_20260227_210057.png)
+![screenshot 01](screenshots/Screenshot_20260227_205815.png) 
+![screenshot 02](screenshots/Screenshot_20260227_205857.png) 
+![screenshot 03](screenshots/Screenshot_20260227_210057.png)
